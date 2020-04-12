@@ -32,13 +32,12 @@ const selfClosingTags = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'inp
       if (tagName && !selfClosingTags.includes(tagName)) {
           openTagsArr.push(tagName);
           spacer += '\t';
-      } else {
-          if (!selfClosingTags.includes(tagName)) {
-              const lastTag = openTagsArr.pop();
-              spacer = spacer.replace('\t', '');
-              htmlString = htmlString.concat(spacer, `</${lastTag}>`, '\n');
-          }
+      } else if (!selfClosingTags.includes(tagName)) {
+          const lastTag = openTagsArr.pop();
+          spacer = spacer.replace('\t', '');
+          htmlString = htmlString.concat(spacer, `</${lastTag}>`, '\n');
       }
+
       if (astChildren.length === 0 || astChildren === []) return;
       astChildren.forEach(child => createHtmlStringOpen(child));
   }
